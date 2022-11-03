@@ -38,7 +38,7 @@ func main() {
 	defer client.Close()
 
 	// load terraform directory
-	tfdirectory, err := client.Host().Workdir().Read().Directory("terraform").ID(ctx)
+	tfdirectory := client.Host().Directory("terraform")
 
 	// load terraform image
 	tf := client.Container().From("hashicorp/terraform:latest")

@@ -22,10 +22,8 @@ func main() {
 	defer client.Close()
 
 	// Build our app
-	project, err := client.Host().Workdir().Read().ID(ctx)
-	if err != nil {
-		panic(err)
-	}
+	project := client.Host().Workdir()
+
 	builder := client.Container().
 		From("golang:latest").
 		WithMountedDirectory("/src", project).
@@ -38,10 +36,7 @@ func main() {
 		})
 
 	// Get built binary
-	build, err := builder.File("/src/hello").ID(ctx)
-	if err != nil {
-		panic(err)
-	}
+	build := builder.File("/src/hello")
 
 	// Publish binary on Alpine base
 	addr, err := client.Container().
